@@ -1,11 +1,19 @@
-import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
+import { useSelector, useDispatch } from 'react-redux'
+import { increment, TCounterInitialState } from './redux/reducers/counterReducer'
+import type {TStore} from "./redux"
+import { useGetTodoByIdQuery } from './redux/reducers/counterReducer'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
-
+  const dispatch = useDispatch();
+  const counter = useSelector<TStore, TCounterInitialState>(state => state.counter);
+  const {data, isSuccess} = useGetTodoByIdQuery(2)
+  if(isSuccess) {
+    console.log(data)
+  }
+ 
   return (
     <>
       <div>
@@ -18,8 +26,8 @@ function App() {
       </div>
       <h1>Vite + React</h1>
       <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
+        <button onClick={() => dispatch(increment())}>
+          count is {counter.count}
         </button>
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
