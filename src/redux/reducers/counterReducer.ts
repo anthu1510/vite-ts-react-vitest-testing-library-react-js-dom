@@ -12,11 +12,14 @@ export const todosApi = createApi({
     reducerPath: 'api',
     baseQuery: fetchBaseQuery({ baseUrl: 'https://jsonplaceholder.typicode.com' }),
     endpoints: (builder) => ({
-      getTodos: builder.query<ITodos[], unknown>({
+      getTodos: builder.query<ITodos[], void>({
         query: () => `/todos`,
       }),
-      getTodoById: builder.query<ITodos, unknown>({
-        query: (id: number) => `/todos/${id}`,
+      getTodoById: builder.query<ITodos, number>({
+        query: (id) => `/todos/${id}`,
+      }),
+      getUsers: builder.query<ITodos, unknown>({
+        query: () => `/users`,
       }),
     }),
   })
@@ -40,6 +43,6 @@ const counterSlice = createSlice({
     }
 })
 
-export const { useGetTodosQuery, useGetTodoByIdQuery } = todosApi;
+export const { useGetTodosQuery, useGetTodoByIdQuery, useGetUsersQuery } = todosApi;
 export const {increment} = counterSlice.actions;
 export const counterReducer = counterSlice.reducer;

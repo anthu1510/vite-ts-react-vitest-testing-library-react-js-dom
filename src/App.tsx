@@ -3,13 +3,17 @@ import viteLogo from '/vite.svg'
 import { useSelector, useDispatch } from 'react-redux'
 import { increment, TCounterInitialState } from './redux/reducers/counterReducer'
 import type {TStore} from "./redux"
-import { useGetTodoByIdQuery } from './redux/reducers/counterReducer'
+import { useGetUsersQuery } from './redux/reducers/counterReducer'
 import './App.css'
 
 function App() {
   const dispatch = useDispatch();
   const counter = useSelector<TStore, TCounterInitialState>(state => state.counter);
-  const {data, isSuccess} = useGetTodoByIdQuery(2)
+  const {data, isSuccess, isError, error} = useGetUsersQuery({})
+
+  if(isError) {
+    console.log(error)
+  }
   if(isSuccess) {
     console.log(data)
   }
